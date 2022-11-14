@@ -11,4 +11,4 @@ $id = $body['id'];
 $user = new User;
 
 $rlt = $user->userResult($id);
-// echo json_encode($rlt);
+echo json_encode($rlt);
