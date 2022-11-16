@@ -10,7 +10,7 @@ class Party extends Database
     public $partySlogan;
     public $partyImage;
     public $status;
-    public $table = "party-register";
+    public $table = "party_register";
     public $result = "";
 
 
@@ -63,10 +63,10 @@ class Party extends Database
             exit;
         }
         
-        // if (is_numeric($this->partyName)) {
-        //     echo json_encode("Name must be in text only!");
-        //     exit;
-        // }
+        if (is_numeric($this->partyName)) {
+            echo json_encode("Name must be in text only!");
+            exit;
+        }
         
 
         // if (($this->isExists("email = '$this->email'"))) {
@@ -79,13 +79,13 @@ class Party extends Database
 
     public function processParty($partyName, $partyColor, $partySlogan, $partyImage)
     {
-
+    
         $this->partyName = $this->escape($partyName);
         $this->partyColor = $this->escape($partyColor);
         $this->partySlogan = $this->escape($partySlogan);
         $this->partyImage = $this->escape($partyImage);
         
-        $this->validateParty();
+        // $this->validateParty();
         $this->saveParty();
 
     }
@@ -95,12 +95,15 @@ class Party extends Database
     public function saveParty()
     {
 
-        return $this->save(
-        $this->table, 
+        return $this->save($this->table, 
         "name = '$this->partyName',
         color = '$this->partyColor',
         slogan = '$this->partySlogan', 
         image = '$this->partyImage'");
+    }
+
+    public function saveImage() {
+        return $this->save($this->table, "image = $this->partyImage");
     }
 
     public function updateParty($userId) {
